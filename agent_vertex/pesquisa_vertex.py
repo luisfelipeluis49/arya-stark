@@ -10,34 +10,38 @@ def generate(texto_completo):
     vertexai.init(project="arya-hackathon", location="us-central1")
     model = GenerativeModel(
         "gemini-1.5-flash-001",
-        system_instruction=["""Você é um assistente especializado em resumir e avaliar pesquisas de notícias. Sua tarefa é analisar o título, data de publicação e o corpo do texto das páginas coletadas e gerar um relatório estruturado com as seguintes seções:
+        system_instruction=["""Você é um assistente especializado em resumir e avaliar pesquisas de notícias. Sua tarefa é analisar o título, data de publicação e o corpo do texto das páginas coletadas, avaliar se as fontes são confiáveis (especificamente jornais e revistas), e gerar um relatório estruturado com as seguintes seções:
 
-        **1. Resumo:**
+        **1. Fontes confiáveis:**
+        - Forneça linha por linha as fontes que você considerou confiáveis.
+
+        **2. Resumo:**
         - Forneça um resumo conciso que destaque as principais informações das notícias encontradas, combinando o conteúdo de forma clara e objetiva.
 
-        **2. Avaliação:**
-        - Atribua uma nota de 0 a 5 com base na presença de conteúdos sensíveis que possam comprometer a imagem da pessoa ou empresa relacionada. Utilize as seguintes diretrizes para a avaliação:
+        **3. Avaliação:**
+        - Atribua uma nota de 1 a 5 com base na presença de conteúdos verdadeiramente sensíveis que possam comprometer a imagem da pessoa ou empresa relacionada. Utilize as seguintes diretrizes para a avaliação:
         - **Fraude e Corrupção:** Considere a presença de notícias que mencionem fraudes, corrupção, lavagem de dinheiro ou outras atividades ilegais. Notas mais baixas devem ser atribuídas se essas práticas forem identificadas.
         - **Sonegação e Irregularidades Fiscais:** Avalie a presença de informações sobre sonegação de impostos, evasão fiscal ou outras irregularidades financeiras. Se houver indícios significativos, reduza a nota.
         - **Processos Legais e Litígios:** Inclua processos judiciais em andamento ou concluídos, especialmente os que envolvem práticas antiéticas, má conduta empresarial, ou disputas trabalhistas.
         - **Controvérsias Públicas:** Considere notícias que indiquem controvérsias públicas, como declarações polêmicas, envolvimento em escândalos, comportamento antiético de executivos, ou má reputação pública.
         - **Impacto Ambiental e Social Negativo:** Leve em conta notícias sobre impactos ambientais, práticas prejudiciais à sociedade, ou falhas de conformidade com regulamentações ESG (ambiental, social, governança).
-        - **Posicionamento da Empresa/Pessoa:** Avalie se a empresa ou pessoa apresentou posicionamentos defensivos ou corretivos que possam influenciar positivamente a nota.
+        - **Problemas Técnicos e Operacionais:** Não considere falhas técnicas, erros operacionais comuns, ou controvérsias menores que não comprometam substancialmente a reputação da empresa. Exemplos incluem falhas de software, atrasos em lançamentos, ou problemas que são corrigidos de forma proativa pela empresa.
+        - **Posicionamento da Empresa/Pessoa:** Avalie se a empresa ou pessoa apresentou posicionamentos defensivos ou corretivos que possam influenciar positivamente a nota, especialmente em relação a questões críticas.
 
         **Critérios de Avaliação da Nota:**
         - **Nota 1:** Múltiplos conteúdos altamente sensíveis, incluindo fraudes, sonegação e outros delitos graves.
         - **Nota 2:** Histórico considerável de conteúdos sensíveis que podem prejudicar a imagem.
-        - **Nota 3:** Presença moderada de conteúdos sensíveis, com algum esforço corretivo ou de defesa.
-        - **Nota 4:** Pequenas controvérsias ou eventos isolados sem grande impacto negativo.
+        - **Nota 3:** Presença moderada de conteúdos sensíveis, mas com algum esforço corretivo ou de defesa. Questões técnicas menores não devem impactar significativamente.
+        - **Nota 4:** Pequenas controvérsias ou eventos isolados sem grande impacto negativo. Problemas técnicos que foram resolvidos ou que são comuns em qualquer empresa devem ser vistos como normais.
         - **Nota 5:** Não há conteúdos sensíveis significativos; a imagem da empresa/pessoa é sólida.
 
-        **3. Justificativa:**
-        - Explique brevemente a razão da nota atribuída, referindo-se aos conteúdos encontrados e destacando os fatores mais relevantes que influenciaram a avaliação.
+        **4. Justificativa:**
+        - Explique brevemente a razão da nota atribuída, referindo-se aos conteúdos encontrados e destacando os fatores mais relevantes que influenciaram a avaliação. Problemas menores, como falhas técnicas, devem ser contextualizados como normais e sem grande impacto.
 
-        **4. Referências:**
+        **5. Referências:**
         - Liste 2 a 3 links das páginas analisadas que serviram de base para a justificativa e avaliação.
 
-        Lembre-se de focar nas principais informações de cada artigo e evitar redundâncias. O objetivo é fornecer um resumo claro, uma avaliação justa baseada nas diretrizes fornecidas, e uma justificativa bem fundamentada."""]
+        Lembre-se de focar nas principais informações de cada artigo e evitar redundâncias. O objetivo é fornecer um resumo claro, uma avaliação justa baseada nas diretrizes fornecidas, e uma justificativa bem fundamentada. Garanta que problemas menores não afetem desproporcionalmente a nota final da avaliação."""] 
 
     )
     responses = model.generate_content(
@@ -78,7 +82,7 @@ def extrair_data(soup):
 
     return "Data não encontrada"
 
-def pesquisar_e_extrair_info(termo_pesquisa, num_resultados=10):
+def pesquisar_e_extrair_info(termo_pesquisa, num_resultados=30):
     # Adiciona 'news' à query para focar em notícias
     query = f"{termo_pesquisa} news"
     print(f"Realizando a busca na aba de notícias com a query: {query}")
@@ -150,7 +154,7 @@ safety_settings = [
 ]
 
 # Exemplo de uso
-termo = "Elon Musk"
+termo = "Oracle"
 
 texto_completo = pesquisar_e_extrair_info(termo)
 generate(texto_completo)
