@@ -1,6 +1,6 @@
 # Arya
 
-Baseando-se em dados transacionais do cliente, interações com a instituição e critérios de due diligence, propomos novos atributos de avaliação para a instituição. O objetivo é facilitar a manutenção dos clientes existentes e o onboarding de novos clientes, integrando informações relevantes por meio de APIs de terceiros ou da própria instituição.
+Baseando-se em dados transacionais do cliente, interações com a instituição e critérios de due diligence, propomos novos atributos de avaliação para a instituição. O objetivo é facilitar a manutenção de análise para o perfil de clientes existentes e o onboarding de novos clientes, integrando informações relevantes por meio de APIs de terceiros ou da própria instituição.
 
 ## Os Agentes
 
