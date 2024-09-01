@@ -7,8 +7,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
 # Credenciais da API do Google
-api_key = "AIzaSyDKNB2FDAhH3T2LLiciNID-Nm-cm65ipZ4"  # Substitua pela sua chave de API
-cx = "45e076713ad704cb3"  # Substitua pelo seu ID de mecanismo de pesquisa personalizado
+api_key = ""  # Substitua pela sua chave de API
+cx = ""  # Substitua pelo seu ID de mecanismo de pesquisa personalizado
 
 def main_agent(nome_empresa, politicas):
     # Define as funções e seus respectivos argumentos
