@@ -34,7 +34,7 @@ class BQGet:
                 max_id = row.max_id
         return max_id + 1
 
-    def update_policies(self, new_policy: str):
+    def update_policies(self, new_policy):
         """
         Atualiza o cache das políticas e persiste no BigQuery com um ID incremental.
         """

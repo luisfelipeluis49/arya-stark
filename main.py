@@ -89,7 +89,7 @@ def analyze_cnpj(cnpj: str):
 
 # Rota para atualizar as políticas no BigQuery e no cache
 @app.post("/update-policy")
-def update_policy(new_policy: str):
+def update_policy(new_policy):
     try:
         update_response = bqget_instance.update_policies(new_policy)
         return update_response
