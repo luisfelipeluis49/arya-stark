@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Arya
 
-## Getting Started
+Baseando-se em dados transacionais do cliente, interações com a instituição e critérios de due diligence, propomos novos políticas de avaliação para a instituição. O objetivo é facilitar a manutenção de análise para o perfil de clientes existentes e o onboarding de novos clientes, integrando informações relevantes por meio de APIs de terceiros ou da própria instituição.
 
-First, run the development server:
+## Os Agentes
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Atualmente, as empresas utilizam, em sua maioria, políticas qualitativas para avaliar dados quantitativos provenientes de diversas fontes, internas ou externas à instituição. Para apoiar esse processo, desenvolvemos dois agentes: um para trabalhar e avaliar dados qualitativos, e outro para dados quantitativos. A criação desses agentes demonstra a eficácia dos LLMs (Large Language Models), gerando análises coerentes e consistentes com base nas políticas da empresa, além de fornecer uma pontuação baseada no due diligence. Para mais detalhes sobre os agentes, acesse a respectiva pasta onde uma explicação detalhada é fornecida.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Agentes](imagem/FluxoDeD.jpg)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+# Copilot
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+A principal IA utilizada no projeto é o `Validador de Políticas`, que é responsável por receber os dados analisados pelo módulo de due diligence e, em conjunto com a avaliação de desempenho dos clientes, utilizando uma arquitetura similar à aplicada em due diligence. No entanto, neste caso, são usadas as informações da própria instituição para avaliar transações relevantes, como lavagem de dinheiro, fraudes, entre outras. 
 
-## Learn More
+![Copilot](imagem/FluxoCopilot.jpg)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Entendemos que este agente pode precisar passar por um fine-tuning, pois os dados que desejamos avaliar são bastante específicos. No entanto, mesmo sem esse procedimento, simulamos a aplicação e obtivemos resultados promissores em um LLM que recebeu informações de clientes, políticas antigas e análises comportamentais dos clientes. Isso permitiu que o LLM gerasse políticas plausíveis. Com um maior volume de dados e um fine-tuning adequado, os resultados são promissores.
