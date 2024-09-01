@@ -1,0 +1,20 @@
+runtime: python310  # Especifica a versão do Python. Ajuste conforme necessário.
+
+instance_class: F2  # Classe da instância (ajuste conforme a necessidade de desempenho)
+
+# Configurações de escalonamento
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 5
+
+entrypoint: uvicorn main:app --host 0.0.0.0 --port $PORT  # Comando para iniciar a aplicação
+
+# Configuração do ambiente
+env_variables:
+  PROJECT_ID: "arya-hackathon"  # Defina suas variáveis de ambiente aqui, conforme necessário
+  LOCATION: "us-central1"
+  MODEL_NAME: "gemini-1.5-flash-001"
+
+# Configurações de tempo limite e solicitação
+# timeout: 300s   # Tempo limite para solicitações HTTP

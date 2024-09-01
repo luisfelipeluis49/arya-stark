@@ -1,5 +1,6 @@
 # main.py - Arquivo para a API FastAPI
 from fastapi import FastAPI, HTTPException
+from numpy import empty
 from pydantic import BaseModel
 from vertexai.generative_models import GenerativeModel, SafetySetting
 import uvicorn
@@ -21,7 +22,7 @@ generation_config = {
     "top_p": 0.95,
 }
 
-cached_analysis = None
+cached_analysis = {}
 
 safety_settings = [
     SafetySetting(
@@ -82,13 +83,7 @@ def generate_analysis(cnpj_input: str):
         stream=False,
     )
 
-    if cached_analysis is None:
-        cached_analysis = []
-        cached_analysis.append({cnpj_input: response})
-    elif cnpj_input not in cached_analysis.keys():
-        cached_analysis.append({cnpj_input: response})
-    else:
-        cached_analysis[cnpj_input] = response
+    cached_analysis[cnpj_input] = response
 
     result_text = response.text
     return result_text if result_text else "Nenhuma resposta gerada."
