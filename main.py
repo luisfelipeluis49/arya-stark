@@ -1,5 +1,6 @@
 # main.py - Arquivo para a API FastAPI
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from vertexai.generative_models import GenerativeModel, SafetySetting
 import uvicorn
 import vertexai
@@ -38,6 +39,10 @@ safety_settings = [
         threshold=SafetySetting.HarmBlockThreshold.BLOCK_LOW_AND_ABOVE
     )
 ]
+
+# Modelo de entrada para o CNPJ
+class CNPJInput(BaseModel):
+    cnpj: str
 
 # Função para gerar a análise com base no CNPJ e nas políticas
 def generate_analysis(cnpj_input: str):
@@ -79,10 +84,10 @@ def generate_analysis(cnpj_input: str):
     return result_text if result_text else "Nenhuma resposta gerada."
 
 # Rota da API para receber o CNPJ e gerar a análise
-@app.post("/analyze/{cnpj}")
-def analyze_cnpj(cnpj: str):
+@app.post("/analyze")
+def analyze_cnpj(input_data: CNPJInput):
     try:
-        result = generate_analysis(cnpj)
+        result = generate_analysis(input_data.cnpj)
         return {"analysis": result}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
