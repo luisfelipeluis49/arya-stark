@@ -21,6 +21,8 @@ generation_config = {
     "top_p": 0.95,
 }
 
+cached_analysis = None
+
 safety_settings = [
     SafetySetting(
         category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
@@ -80,6 +82,14 @@ def generate_analysis(cnpj_input: str):
         stream=False,
     )
 
+    if cached_analysis is None:
+        cached_analysis = []
+        cached_analysis.append({cnpj_input: response})
+    elif cnpj_input not in cached_analysis.keys():
+        cached_analysis.append({cnpj_input: response})
+    else:
+        cached_analysis[cnpj_input] = response
+
     result_text = response.text
     return result_text if result_text else "Nenhuma resposta gerada."
 
@@ -92,12 +102,31 @@ def analyze_cnpj(input_data: CNPJInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Rota da API para receber o CNPJ e gerar a análise
+@app.get("/analyze/{cnpj}")
+def get_analysis(cnpj: str):
+    try:
+        result = generate_analysis(cnpj)
+        return {"analysis": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Rota para atualizar as políticas no BigQuery e no cache
-@app.post("/update-policy")
+@app.post("/policies")
 def update_policy(new_policy):
     try:
         update_response = bqget_instance.update_policies(new_policy)
         return update_response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+# Rota para pegar as políticas no BigQuery e no cache
+@app.get("/policies")
+def get_policy(new_policy):
+    try:
+        get_response = bqget_instance.get_policies()
+        return get_response;
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
