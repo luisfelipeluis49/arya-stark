@@ -1,17 +1,17 @@
 # Arya
 
-Baseando-se em dados transacionais do cliente, interações com a instituição e critérios de due diligence, propomos novos políticas de avaliação para a instituição. O objetivo é facilitar a manutenção de análise para o perfil de clientes existentes e o onboarding de novos clientes, integrando informações relevantes por meio de APIs de terceiros ou da própria instituição.
+Based on the client's transactional data, interactions with the institution, and due diligence criteria, we propose new evaluation policies for the institution. The goal is to facilitate the maintenance of analysis for existing client profiles and the onboarding of new clients by integrating relevant information through third-party APIs or the institution itself.
 
-## Os Agentes
+## The Agents
 
-Atualmente, as empresas utilizam, em sua maioria, políticas qualitativas para avaliar dados quantitativos provenientes de diversas fontes, internas ou externas à instituição. Para apoiar esse processo, desenvolvemos dois agentes: um para trabalhar e avaliar dados qualitativos, e outro para dados quantitativos. A criação desses agentes demonstra a eficácia dos LLMs (Large Language Models), gerando análises coerentes e consistentes com base nas políticas da empresa, além de fornecer uma pontuação baseada no due diligence. Para mais detalhes sobre os agentes, acesse a respectiva pasta onde uma explicação detalhada é fornecida.
+Currently, most companies use qualitative policies to evaluate quantitative data from various internal or external sources. To support this process, we have developed two agents: one to process and evaluate qualitative data and another for quantitative data. The creation of these agents demonstrates the effectiveness of LLMs (Large Language Models), generating coherent and consistent analyses based on the company’s policies while also providing a due diligence-based scoring system. For more details about the agents, refer to the respective folder where a detailed explanation is provided.
 
 ![Agentes](imagem/FluxoDeD.jpg)
 
 # Copilot
 
-A principal IA utilizada no projeto é o `Validador de Políticas`, que é responsável por receber os dados analisados pelo módulo de due diligence e, em conjunto com a avaliação de desempenho dos clientes, utilizando uma arquitetura similar à aplicada em due diligence. No entanto, neste caso, são usadas as informações da própria instituição para avaliar transações relevantes, como lavagem de dinheiro, fraudes, entre outras. 
+The primary AI used in the project is the `Policy Validator`, responsible for receiving data analyzed by the due diligence module and, in conjunction with client performance evaluations, applying an architecture similar to that used in due diligence. However, in this case, the institution’s own information is used to assess relevant transactions, such as money laundering, fraud, and other risks. 
 
 ![Copilot](imagem/FluxoCopilot.jpg)
 
-Entendemos que este agente pode precisar passar por um fine-tuning, pois os dados que desejamos avaliar são bastante específicos. No entanto, mesmo sem esse procedimento, simulamos a aplicação e obtivemos resultados promissores em um LLM que recebeu informações de clientes, políticas antigas e análises comportamentais dos clientes. Isso permitiu que o LLM gerasse políticas plausíveis. Com um maior volume de dados e um fine-tuning adequado, os resultados são promissores.
+We understand that this agent may require fine-tuning since the data we aim to evaluate is highly specific. However, even without this procedure, we simulated its application and achieved promising results with an LLM that was fed client information, previous policies, and behavioral analyses. This allowed the LLM to generate plausible policies. With a larger volume of data and proper fine-tuning, the results are even more promising.
